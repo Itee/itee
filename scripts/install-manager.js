@@ -37,7 +37,7 @@ ARGV.forEach( argument => {
 } )
 
 const ROOT_PATH    = path.resolve( __dirname, '..', '..', '..' )
-const TO_COPY_PATH = path.join( __dirname, '..', 'node_modules/itee-server' )
+const TO_COPY_PATH = path.join( ROOT_PATH, 'node_modules/itee-server' )
 
 function postInstall () {
     'use strict'
