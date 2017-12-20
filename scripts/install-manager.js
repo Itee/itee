@@ -111,6 +111,9 @@ function _getFilesPathsUnder ( filePaths ) {
 function _copyFiles ( inputPath, outputPath ) {
     'use strict'
 
+    console.log(inputPath)
+    console.log(outputPath)
+
     const filesPaths     = _getFilesPathsUnder( inputPath )
     const isTemplateFile = false
 
