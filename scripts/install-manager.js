@@ -10,7 +10,6 @@
  * @requires {@link module: [fs]{@link https://nodejs.org/api/fs.html}}
  * @requires {@link module: [fs-extra]{@link https://github.com/jprichardson/node-fs-extra}}
  * @requires {@link module: [path]{@link https://nodejs.org/api/path.html}}
- * @requires {@link module: [prompt]{@link https://github.com/flatiron/prompt}}
  * @requires {@link module: [child_process]{@link https://nodejs.org/api/child_process.html}}
  *
  */
@@ -19,12 +18,8 @@
 const fs           = require( 'fs' )
 const fsExtra      = require( 'fs-extra' )
 const path         = require( 'path' )
-const prompt       = require( 'prompt' )
 const { execSync } = require( 'child_process' )
 
-// override prompt message
-prompt.message   = 'Itee say'
-prompt.delimiter = ' '
 
 // Process argv
 const ARGV           = process.argv.slice( 2 ) // Ignore nodejs and script paths
