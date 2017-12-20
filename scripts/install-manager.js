@@ -20,7 +20,6 @@ const fsExtra      = require( 'fs-extra' )
 const path         = require( 'path' )
 const { execSync } = require( 'child_process' )
 
-
 // Process argv
 const ARGV           = process.argv.slice( 2 ) // Ignore nodejs and script paths
 let installationMode = undefined
@@ -37,14 +36,26 @@ ARGV.forEach( argument => {
 
 } )
 
-const ROOT_PATH          = path.resolve( __dirname, '..', '..', '..' )
-const TO_COPY_PATH       = path.join( __dirname, '..', 'node_modules/itee-server' )
+const ROOT_PATH    = path.resolve( __dirname, '..', '..', '..' )
+const TO_COPY_PATH = path.join( __dirname, '..', 'node_modules/itee-server' )
 
 function postInstall () {
     'use strict'
 
+    _installIteeServer()
     _copyFiles( TO_COPY_PATH, ROOT_PATH )
     _firstRelease()
+
+}
+
+function _installIteeServer () {
+
+    execSync( 'npm install itee-server',
+        {
+            cwd:   ROOT_PATH,
+            stdio: 'inherit'
+        }
+    )
 
 }
 
@@ -111,8 +122,8 @@ function _getFilesPathsUnder ( filePaths ) {
 function _copyFiles ( inputPath, outputPath ) {
     'use strict'
 
-    console.log(inputPath)
-    console.log(outputPath)
+    console.log( inputPath )
+    console.log( outputPath )
 
     const filesPaths     = _getFilesPathsUnder( inputPath )
     const isTemplateFile = false
