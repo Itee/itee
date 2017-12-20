@@ -45,6 +45,7 @@ function postInstall () {
     _installIteeServer()
     _copyFiles( TO_COPY_PATH, ROOT_PATH )
     _installPackages()
+    _cleanPackages()
     _firstRelease()
 
 }
@@ -153,6 +154,17 @@ function _copyFiles ( inputPath, outputPath ) {
 function _installPackages (  ) {
 
     execSync( 'npm install',
+        {
+            cwd:   ROOT_PATH,
+            stdio: 'inherit'
+        }
+    )
+
+}
+
+function _cleanPackages () {
+
+    execSync( 'npm prune',
         {
             cwd:   ROOT_PATH,
             stdio: 'inherit'
