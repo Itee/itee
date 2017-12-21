@@ -1,7 +1,6 @@
-# <center>[IteeClient]</center>
+# <center>[Itee]</center>
 
-The itee client is the end user part of the itee solution predicted for running WebGL 3d content.
-It allow to make fast, and light call to itee server counter part to create/read/update/delete data from webgl server.
+The itee solution is predicted for running WebGL 3d content. It's a light and fast 3d server, ready to use.
 
 
 ## How to install
