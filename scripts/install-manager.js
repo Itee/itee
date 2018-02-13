@@ -21,9 +21,9 @@ const path         = require( 'path' )
 const { execSync } = require( 'child_process' )
 
 // Process argv
-const ARGV           = process.argv.slice( 2 ) // Ignore nodejs and script paths
-let installationMode = undefined
-let iteeUrlOverride  = undefined
+const ARGV                   = process.argv.slice( 2 ) // Ignore nodejs and script paths
+let installationMode         = undefined
+let iteeServerCommitOverride = undefined
 
 ARGV.forEach( argument => {
 
@@ -34,8 +34,8 @@ ARGV.forEach( argument => {
 
     } else if ( argument.indexOf( '-c' ) > -1 || argument.indexOf( '--commit' ) > -1 ) {
 
-        const splits     = argument.split( ':' )
-        iteeUrlOverride = splits[ 1 ]
+        const splits             = argument.split( ':' )
+        iteeServerCommitOverride = splits[ 1 ]
 
     } else {
         throw new Error( `Build Script: invalid argument ${argument}. Type \`npm run help build\` to display available argument.` )
@@ -59,7 +59,7 @@ function postInstall () {
 
 function _installIteeServer () {
 
-    let installCommand = ( iteeUrlOverride ) ? `npm install ${iteeUrlOverride}` : 'npm install itee-server'
+    let installCommand = ( iteeServerCommitOverride ) ? `npm install git@github.com:Itee/itee-server.git#${iteeServerCommitOverride}` : 'npm install itee-server'
 
     execSync( installCommand,
         {
