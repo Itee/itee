@@ -59,7 +59,7 @@ function postInstall () {
 
 function _installIteeServer () {
 
-    let installCommand = ( iteeServerCommitOverride ) ? `npm install git@github.com:Itee/itee-server.git#${iteeServerCommitOverride}` : 'npm install itee-server'
+    let installCommand = ( iteeServerCommitOverride ) ? `npm install git+https://Itee@github.com/Itee/itee-server.git#${iteeServerCommitOverride}` : 'npm install itee-server'
 
     execSync( installCommand,
         {
