@@ -23,12 +23,19 @@ const { execSync } = require( 'child_process' )
 // Process argv
 const ARGV           = process.argv.slice( 2 ) // Ignore nodejs and script paths
 let installationMode = undefined
+let iteeUrlOverride  = undefined
+
 ARGV.forEach( argument => {
 
     if ( argument.indexOf( '-m' ) > -1 || argument.indexOf( '--mode' ) > -1 ) {
 
         const splits     = argument.split( ':' )
         installationMode = splits[ 1 ]
+
+    } else if ( argument.indexOf( '-c' ) > -1 || argument.indexOf( '--commit' ) > -1 ) {
+
+        const splits     = argument.split( ':' )
+        iteeUrlOverride = splits[ 1 ]
 
     } else {
         throw new Error( `Build Script: invalid argument ${argument}. Type \`npm run help build\` to display available argument.` )
@@ -52,7 +59,9 @@ function postInstall () {
 
 function _installIteeServer () {
 
-    execSync( 'npm install itee-server',
+    let installCommand = ( iteeUrlOverride ) ? `npm install ${iteeUrlOverride}` : 'npm install itee-server'
+
+    execSync( installCommand,
         {
             cwd:   ROOT_PATH,
             stdio: 'inherit'
@@ -151,7 +160,7 @@ function _copyFiles ( inputPath, outputPath ) {
 
 }
 
-function _installPackages (  ) {
+function _installPackages () {
 
     execSync( 'npm install',
         {
