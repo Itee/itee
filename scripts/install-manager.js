@@ -22,17 +22,11 @@ const { execSync } = require( 'child_process' )
 
 // Process argv
 const ARGV                   = process.argv.slice( 2 ) // Ignore nodejs and script paths
-let installationMode         = undefined
 let iteeServerCommitOverride = undefined
 
 ARGV.forEach( argument => {
 
-    if ( argument.indexOf( '-m' ) > -1 || argument.indexOf( '--mode' ) > -1 ) {
-
-        const splits     = argument.split( ':' )
-        installationMode = splits[ 1 ]
-
-    } else if ( argument.indexOf( '-c' ) > -1 || argument.indexOf( '--commit' ) > -1 ) {
+    if ( argument.indexOf( '-c' ) > -1 || argument.indexOf( '--commit' ) > -1 ) {
 
         const splits             = argument.split( ':' )
         iteeServerCommitOverride = splits[ 1 ]
@@ -194,10 +188,4 @@ function _firstRelease () {
 
 }
 
-if ( installationMode === 'install' ) {
-    postInstall()
-} else if ( installationMode === 'uninstall' ) {
-    //    postUninstall()
-} else {
-    console.error( "Invalid installation mode, avalaible values are: 'install' and 'uninstall'" )
-}
+postInstall()
