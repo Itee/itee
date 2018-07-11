@@ -22,14 +22,26 @@ const { execSync } = require( 'child_process' )
 
 // Process argv
 const ARGV                   = process.argv.slice( 2 ) // Ignore nodejs and script paths
-let iteeServerCommitOverride = undefined
+let commitOverride = undefined
+let inputOverride  = undefined
+let outputOverride = undefined
 
 ARGV.forEach( argument => {
 
     if ( argument.indexOf( '-c' ) > -1 || argument.indexOf( '--commit' ) > -1 ) {
 
         const splits             = argument.split( ':' )
-        iteeServerCommitOverride = splits[ 1 ]
+        commitOverride = splits[ 1 ]
+
+    } else if ( argument.indexOf( '-i' ) > -1 || argument.indexOf( '--input' ) > -1 ) {
+
+        const splits             = argument.split( ':' )
+        inputOverride = splits[ 1 ]
+
+    } else if ( argument.indexOf( '-o' ) > -1 || argument.indexOf( '--output' ) > -1 ) {
+
+        const splits             = argument.split( ':' )
+        outputOverride = splits[ 1 ]
 
     } else {
         throw new Error( `Build Script: invalid argument ${argument}. Type \`npm run help build\` to display available argument.` )
@@ -43,17 +55,26 @@ const TO_COPY_PATH = path.join( ROOT_PATH, 'node_modules/itee-server' )
 function postInstall () {
     'use strict'
 
-    _installIteeServer()
-    _copyFiles( TO_COPY_PATH, ROOT_PATH )
-    _installPackages()
-    _cleanPackages()
-    _firstRelease()
+    if( inputOverride && outputOverride ) {
+
+        // Static install
+        _copyFiles( inputOverride, outputOverride )
+
+    } else {
+
+        _installIteeServer()
+        _copyFiles( TO_COPY_PATH, ROOT_PATH )
+        _installPackages()
+        _cleanPackages()
+        _firstRelease()
+
+    }
 
 }
 
 function _installIteeServer () {
 
-    let installCommand = ( iteeServerCommitOverride ) ? `npm install git+https://Itee@github.com/Itee/itee-server.git#${iteeServerCommitOverride}` : 'npm install itee-server'
+    let installCommand = ( commitOverride ) ? `npm install git+https://Itee@github.com/Itee/itee-server.git#${commitOverride}` : 'npm install itee-server'
 
     execSync( installCommand,
         {
