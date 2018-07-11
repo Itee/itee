@@ -56,24 +56,24 @@ console.log( process.memoryUsage() )                    // eslint-disable-line
 console.log( '\n' )
 
 console.log( 'CONFIG :' )
-var config = require( './configs/itee.conf' )( process )
+var config = require( '../configs/itee.conf' )( process )
 console.log( config )
 console.log( '\n' )
 
 // ////////////////////////////////////
 // ////////// DATABASE ////////////////
 // ////////////////////////////////////
-var database = require( './sources/_core/_databases/_mongodb/TDatabase.js' )( config.database )
+var database = require( '../node_modules/itee-database-mongodb/sources/TDatabase.js' )( config.database )
 
 // ////////////////////////////////////
 // ////////// APPLICATION /////////////
 // ////////////////////////////////////
-var application = require( './sources/_core/_server/TServerApplication' )( config.application )
+var application = require( '../node_modules/itee-server/sources/TServerApplication.js' )( config.application )
 
 // ////////////////////////////////////
 // ////////// SERVER HTTP /////////////
 // ////////////////////////////////////
-var server = require( './sources/_core/_server/HttpServer.js' )( application, config.server )
+var server = require( '../node_modules/itee-server/sources/HttpServer.js' )( application, config.server )
 
 // ////////////////////////////////////
 // //////////// PROCESS ///////////////
