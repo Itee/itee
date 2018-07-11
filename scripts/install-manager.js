@@ -64,7 +64,7 @@ ARGV.forEach( argument => {
 const ROOT_PATH    = path.resolve( __dirname, '..', '..', '..' )
 const CLIENT_FROM_PATH = path.join( ROOT_PATH, 'node_modules/itee-client' )
 const CLIENT_TO_PATH = path.join( ROOT_PATH, 'clients' )
-const DATABASE_FROM_PATH = path.join( ROOT_PATH, 'node_modules/itee-database' )
+const DATABASE_FROM_PATH = path.join( ROOT_PATH, 'node_modules/itee-database-mongodb' )
 const DATABASE_TO_PATH = path.join( ROOT_PATH, 'databases' )
 const SERVER_FROM_PATH = path.join( ROOT_PATH, 'node_modules/itee-server' )
 const SERVER_TO_PATH = path.join( ROOT_PATH, 'servers' )
@@ -83,7 +83,7 @@ function postInstall () {
         _copyFiles( CLIENT_FROM_PATH, CLIENT_TO_PATH )
         _installPackagesAt( CLIENT_TO_PATH )
 
-        _installIteePackage('itee-database', databaseCommitOverride)
+        _installIteePackage('itee-database-mongodb', databaseCommitOverride)
         _copyFiles( DATABASE_FROM_PATH, DATABASE_TO_PATH )
         _installPackagesAt( DATABASE_TO_PATH )
 
