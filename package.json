@@ -8,7 +8,7 @@
     "url": "https://github.com/Itee"
   },
   "scripts": {
-    "postinstall": "node scripts/install-manager.js --mode:install",
+    "postinstall": "node scripts/install-manager.js",
     "build-client": "",
     "build-database": "",
     "build-server": ""
