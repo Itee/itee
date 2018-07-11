@@ -268,7 +268,7 @@ function _copyFiles ( inputPath, outputPath ) {
         if ( isTemplateFile ) {
             // Todo: manage template files
         } else {
-            console.log( `Copying from ${inputPath} to ${outputPath}` )
+            console.log( `Copying from ${filePath} to ${outputFilePath}` )
             fsExtra.copySync( filePath, outputFilePath )
         }
 
