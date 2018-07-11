@@ -9,6 +9,9 @@
   },
   "scripts": {
     "postinstall": "node scripts/install-manager.js --mode:install"
+    "build-client": "",
+    "build-database": "",
+    "build-server": ""
   },
   "contributors": [
     {}
