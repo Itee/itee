@@ -68,12 +68,12 @@ function CreateIteeConfiguration ( process ) {
 
                 morgan: {
                     interval:      '1d',
-                    directoryPath: (isProduction) ? path.join( __dirname, '..', '/logs/access.log' ) : path.join( __dirname, '..', '/logs/access.log' ),
+                    directoryPath: (isProduction) ? path.join( __dirname, '..', 'servers/logs/access.log' ) : path.join( __dirname, '..', 'servers/logs/access.log' ),
                     fileName:      'access.log'
                 },
 
                 favicon: {
-                    path: (isProduction) ? path.join( __dirname, '..', '/resources/favicon.ico' ) : path.join( __dirname, '..', '/resources/favicon.ico' ),
+                    path: (isProduction) ? path.join( __dirname, '..', 'servers/resources/favicon.ico' ) : path.join( __dirname, '..', 'servers/resources/favicon.ico' ),
                 },
 
             }

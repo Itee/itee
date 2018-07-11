@@ -157,7 +157,7 @@ function postInstall () {
         _installIteePackage( 'itee-database-mongodb', databaseCommitOverride )
         _installIteePackage( 'itee-server', serverCommitOverride )
         _cleanPackages()
-        _firstRelease()
+        //_firstRelease()
 
     } )
 
