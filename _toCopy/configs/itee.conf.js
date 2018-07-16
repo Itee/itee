@@ -20,8 +20,9 @@ function CreateIteeConfiguration ( process ) {
 
     return {
         database:    {
-            database_url:           'mongodb://127.0.0.1/sight',
+            database_url:           'mongodb://127.0.0.1/mydb',
             auto_reconnect_timeout: 10000,
+            plugins: ['itee-database-mongodb-three']
         },
         application: {
 
@@ -76,9 +77,7 @@ function CreateIteeConfiguration ( process ) {
                     path: (isProduction) ? path.join( __dirname, '..', 'servers/resources/favicon.ico' ) : path.join( __dirname, '..', 'servers/resources/favicon.ico' ),
                 },
 
-            },
-
-            plugins: ['itee-database-mongodb']
+            }
 
         },
         server:      {
