@@ -76,7 +76,9 @@ function CreateIteeConfiguration ( process ) {
                     path: (isProduction) ? path.join( __dirname, '..', 'servers/resources/favicon.ico' ) : path.join( __dirname, '..', 'servers/resources/favicon.ico' ),
                 },
 
-            }
+            },
+
+            plugins: ['itee-database-mongodb']
 
         },
         server:      {
