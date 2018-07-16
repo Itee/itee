@@ -43,7 +43,7 @@ console.time( 'Server launch time' )
 // /////////////////////////////
 // ///////// GLOBAL ////////////
 // /////////////////////////////
-var os = require( 'os' )
+const os = require( 'os' )
 
 console.log( 'GLOBAL CONST :' )
 console.log( `\t__dirname : ${__dirname}` )             // eslint-disable-line
@@ -56,24 +56,24 @@ console.log( process.memoryUsage() )                    // eslint-disable-line
 console.log( '\n' )
 
 console.log( 'CONFIG :' )
-var config = require( '../configs/itee.conf' )( process )
+const config = require( '../configs/itee.conf' )( process )
 console.log( config )
 console.log( '\n' )
 
 // ////////////////////////////////////
 // ////////// DATABASE ////////////////
 // ////////////////////////////////////
-var database = require( '../node_modules/itee-database-mongodb/sources/TDatabase.js' )( config.database )
+const database = require( '../node_modules/itee-database-mongodb/sources/TMongoDBDatabase.js' )( config.database )
 
 // ////////////////////////////////////
 // ////////// APPLICATION /////////////
 // ////////////////////////////////////
-var application = require( '../node_modules/itee-server/sources/TServerApplication.js' )( config.application )
+const application = require( '../node_modules/itee-server/sources/TServerApplication.js' )( config.application )
 
 // ////////////////////////////////////
 // ////////// SERVER HTTP /////////////
 // ////////////////////////////////////
-var server = require( '../node_modules/itee-server/sources/HttpServer.js' )( application, config.server )
+const server = require( '../node_modules/itee-server/sources/HttpServer.js' )( application, config.server )
 
 // ////////////////////////////////////
 // //////////// PROCESS ///////////////
@@ -88,7 +88,7 @@ function shutDown() {
         console.log( 'Closed out remaining connections.' )
 
         // Close db connections, etc.
-        database.connection.close( () => {
+        database.close( () => {
 
             console.log( 'Fermeture de la connexion à la base de données dût à la fermeture de l\'application !' )
             process.exit( 0 )
