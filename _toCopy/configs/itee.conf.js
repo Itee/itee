@@ -19,11 +19,14 @@ function CreateIteeConfiguration ( process ) {
     const isProduction = (ENV === 'production')
 
     return {
-        database:    {
-            database_url:           'mongodb://127.0.0.1/mydb',
-            auto_reconnect_timeout: 10000,
-            plugins: ['itee-database-mongodb-three']
-        },
+        databases:   [
+            {
+                type:                   'mongo',
+                database_url:           'mongodb://127.0.0.1/mydb',
+                auto_reconnect_timeout: 10000,
+                plugins:                [ 'itee-database-mongodb-three' ]
+            }
+        ],
         application: {
 
             env:      ENV,
