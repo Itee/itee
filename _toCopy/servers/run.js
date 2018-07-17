@@ -60,16 +60,20 @@ const config = require( '../configs/itee.conf' )( process )
 console.log( config )
 console.log( '\n' )
 
-const TServer = require('itee-server')
-const iteeServer = new TServer(config)
+const TServer    = require( 'itee-server' )
+const iteeServer = new TServer( config )
 iteeServer.start()
 
-process.on( 'SIGTERM', iteeServer.stop( shutDown ) )
-process.on( 'SIGINT', iteeServer.stop( shutDown ) )
+process.on( 'SIGTERM', shutDown )
+process.on( 'SIGINT', shutDown )
 
-function shutDown() {
+function shutDown () {
 
-    console.log( 'Fermeture de la connexion à la base de données dût à la fermeture de l\'application !' )
-    process.exit( 0 )
+    iteeServer.stop( () => {
+
+        console.log( 'Fermeture de la connexion à la base de données dût à la fermeture de l\'application !' )
+        process.exit( 0 )
+
+    } )
 
 }
