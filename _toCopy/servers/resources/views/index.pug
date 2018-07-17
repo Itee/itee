@@ -1,0 +1,39 @@
+doctype html
+html(lang='en')
+
+    head
+        base(href='../../../')
+        title Itee
+        meta(charset='utf-8')
+
+        if env == "production"
+            link(rel='stylesheet', type='text/css', href='resources/styles/style.min.css')
+        else
+            link(rel='stylesheet', type='text/css', href='resources/styles/itee-client.style.css')
+            link(rel='stylesheet', type='text/css', href='resources/styles/bootstrap.css')
+
+    body
+        div#itee-application-root
+            router-view
+
+    if env == "production"
+        script(src='resources/scripts/itee-client.iife.min.js', type='text/javascript')
+        script(src='resources/applications/' + _app_ + '.min.js', type='application/javascript')
+    else
+        script(src='resources/scripts/itee-client.iife.js', type='text/javascript')
+        script(src='resources/applications/' + _app_ + '.js', type='application/javascript')
+
+    if _config_
+        script.
+            var IteeQueryConfig = JSON.parse( !{JSON.stringify( _config_ )} )
+            Itee.startApp( IteeConfig )
+    else
+        script.
+            var IteeQueryConfig = null // Todo: use js-stringify in prod
+            Itee.startApp( IteeConfig )
+
+//        var environment  = Itee.analyseEnvironment()
+//        var rawMaterial  = Itee.getRawMaterial( environment )
+//        var flyingSaucer = Itee.createFlyingSaucer( rawMaterial )
+//        //
+//        flyingSaucer.launch()
