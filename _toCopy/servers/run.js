@@ -68,7 +68,7 @@ const database = require( '../node_modules/itee-database-mongodb/sources/TMongoD
 // ////////////////////////////////////
 // ////////// APPLICATION /////////////
 // ////////////////////////////////////
-const application = require( '../node_modules/itee-server/sources/TServerApplication.js' )( config.application )
+const application = require( '../node_modules/itee-server/sources/TServerApplication.js' )( [database], config.application )
 
 // ////////////////////////////////////
 // ////////// SERVER HTTP /////////////
