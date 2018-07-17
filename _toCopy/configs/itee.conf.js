@@ -27,7 +27,7 @@ function CreateIteeConfiguration ( process ) {
                 plugins:                [ 'itee-database-mongodb-three' ]
             }
         ],
-        application: {
+        applications: {
 
             env:      ENV,
             hostname: (process.env.HOST) ? process.env.HOST : (isProduction) ? '0.0.0.0' : 'localhost',
@@ -80,10 +80,17 @@ function CreateIteeConfiguration ( process ) {
                     path: (isProduction) ? path.join( __dirname, '..', 'servers/resources/favicon.ico' ) : path.join( __dirname, '..', 'servers/resources/favicon.ico' ),
                 },
 
+            },
+
+            routers: {
+                '/': 'index/index.js',
+                '/downloads': 'downloads/downloads.js',
+                '/resources': 'resources/resources.js',
+                //'/uploads': 'uploads/uploads.js'
             }
 
         },
-        server:      {
+        servers:      {
             max_headers_count: 1100,
             timeout:           30000
         }
