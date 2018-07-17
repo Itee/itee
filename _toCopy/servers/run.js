@@ -60,41 +60,16 @@ const config = require( '../configs/itee.conf' )( process )
 console.log( config )
 console.log( '\n' )
 
-// ////////////////////////////////////
-// ////////// DATABASE ////////////////
-// ////////////////////////////////////
-const database = require( '../node_modules/itee-database-mongodb/sources/TMongoDBDatabase.js' )( config.database )
+const TServer = require('itee-server')
+const iteeServer = new TServer(config)
+iteeServer.start()
 
-// ////////////////////////////////////
-// ////////// APPLICATION /////////////
-// ////////////////////////////////////
-const application = require( '../node_modules/itee-server/sources/TServerApplication.js' )( [database], config.application )
-
-// ////////////////////////////////////
-// ////////// SERVER HTTP /////////////
-// ////////////////////////////////////
-const server = require( '../node_modules/itee-server/sources/HttpServer.js' )( application, config.server )
-
-// ////////////////////////////////////
-// //////////// PROCESS ///////////////
-// ////////////////////////////////////
-process.on( 'SIGTERM', shutDown )
-process.on( 'SIGINT', shutDown )
+process.on( 'SIGTERM', iteeServer.stop( shutDown ) )
+process.on( 'SIGINT', iteeServer.stop( shutDown ) )
 
 function shutDown() {
 
-    server.close( () => {
-
-        console.log( 'Closed out remaining connections.' )
-
-        // Close db connections, etc.
-        database.close( () => {
-
-            console.log( 'Fermeture de la connexion à la base de données dût à la fermeture de l\'application !' )
-            process.exit( 0 )
-
-        } )
-
-    } )
+    console.log( 'Fermeture de la connexion à la base de données dût à la fermeture de l\'application !' )
+    process.exit( 0 )
 
 }
