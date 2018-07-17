@@ -367,6 +367,7 @@ function _updateDevDependencies ( packageJson ) {
 
 function _installPackages () {
 
+    console.log('Installing temporary packages...')
     execSync( 'npm install',
         {
             cwd:   ROOT_PATH,
@@ -378,6 +379,7 @@ function _installPackages () {
 
 function _installIteePackage ( packageName, commitOverride ) {
 
+    console.log(`Installing ${packageName}...`)
     let installCommand = ( commitOverride ) ? `npm install --save git+https://Itee@github.com/Itee/${packageName}.git#${commitOverride}` : `npm install --save ${packageName}`
 
     execSync( installCommand,
@@ -391,6 +393,7 @@ function _installIteePackage ( packageName, commitOverride ) {
 
 function _cleanPackages () {
 
+    console.log('Removing temporary packages...')
     execSync( 'npm prune',
         {
             cwd:   ROOT_PATH,
