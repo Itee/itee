@@ -36,7 +36,7 @@ router
     .get( '/:file(*)', ( request, response, next ) => {
 
         const resource       = request.params.file
-        const pathToFile = path.join( __dirname, '../../../../../', '/resources/', resource )
+        const pathToFile = path.join( __dirname, '../../', '/resources/', resource )
 
         fs.stat(
             pathToFile,
