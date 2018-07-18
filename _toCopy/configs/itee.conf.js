@@ -19,6 +19,7 @@ function CreateIteeConfiguration ( process ) {
     const isProduction = (ENV === 'production')
 
     return {
+        rootPath:     path.join( __dirname, '..' ),
         databases:   [
             {
                 type:                   'mongo',
