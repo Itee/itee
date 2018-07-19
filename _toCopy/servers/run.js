@@ -45,6 +45,11 @@ console.time( 'Server launch time' )
 // /////////////////////////////
 const os = require( 'os' )
 
+console.log( 'ENVIRONMENT :' )
+for ( let envKey in process.env ) {
+    console.log( `\t${envKey} : ${process.env[envKey]}` )   // eslint-disable-line
+}
+
 console.log( 'GLOBAL CONST :' )
 console.log( `\t__dirname : ${__dirname}` )             // eslint-disable-line
 console.log( `\t__filename : ${__filename}` )           // eslint-disable-line
