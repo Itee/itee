@@ -155,6 +155,7 @@ function postInstall () {
         _installIteePackage( 'itee-utils', utilsCommitOverride )
         _installIteePackage( 'itee-client', clientCommitOverride )
         _installIteePackage( 'itee-database-mongodb', databaseCommitOverride )
+        _installIteePackage( 'itee-mongodb-three', null )
         _installIteePackage( 'itee-server', serverCommitOverride )
         _cleanPackages()
         //_firstRelease()
