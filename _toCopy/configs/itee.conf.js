@@ -23,9 +23,9 @@ function CreateIteeConfiguration ( process ) {
         databases:   [
             {
                 type:                   'mongo',
-                database_url:           'mongodb://127.0.0.1/mydb',
+                database_url:           'mongodb://myMongo:27017/mydb',
                 auto_reconnect_timeout: 10000,
-                plugins:                [ 'itee-database-mongodb-three' ]
+                plugins:                [ 'itee-mongodb-three' ]
             }
         ],
         applications: {
