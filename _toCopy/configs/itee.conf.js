@@ -20,12 +20,12 @@ function CreateIteeConfiguration ( process ) {
 
     return {
         rootPath:     path.join( __dirname, '..' ),
-        databases:   [
+        databases:    [
             {
-                type:                   'mongo',
-                database_url:           'mongodb://myMongo:27017/mydb',
-                auto_reconnect_timeout: 10000,
-                plugins:                [ 'itee-mongodb-three' ]
+                type:                 'mongo',
+                databaseUrl:          'mongodb://127.0.0.1:27017/mydb',
+                autoReconnectTimeout: 10000,
+                plugins:              [ 'itee-mongodb-three' ]
             }
         ],
         applications: {
@@ -84,10 +84,9 @@ function CreateIteeConfiguration ( process ) {
             },
 
             routers: {
-                '/': 'index/index.js',
+                '/':          'index/index.js',
                 '/downloads': 'downloads/downloads.js',
-                '/resources': 'resources/resources.js',
-                //'/uploads': 'uploads/uploads.js'
+                '/resources': 'resources/resources.js'
             }
 
         },
