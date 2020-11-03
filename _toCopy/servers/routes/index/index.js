@@ -10,27 +10,9 @@
 /*
  * MODULES
  */
-var router = require( 'express' ).Router( { mergeParams: true } )
-var path   = require( 'path' )
-var fs     = require( 'fs' )
-
-function getURLParams ( query ) {
-
-    var urlParams = {}
-
-    for ( let key in query ) {
-
-        if ( key === 'app' ) {
-            continue
-        }
-
-        urlParams[ key ] = query[ key ]
-
-    }
-
-    return urlParams
-
-}
+const router = require( 'express' ).Router( { mergeParams: true } )
+const path   = require( 'path' )
+const fs     = require( 'fs' )
 
 /*
  * ROUTER
@@ -40,29 +22,33 @@ router
 
         const pathToFile = path.join( __dirname, '../../resources/views/', 'index.pug' )
         const app        = request.query.app || 'undefined'
+        const standAlone = request.query.standAlone || false
         const config     = request.query.config || null
 
         fs.stat(
             pathToFile,
             ( error, stats ) => {
 
-                if ( error === null && stats.isFile() ) {
-
-                    response
-                        .render(
-                            pathToFile,
-                            {
-                                _app_:    app,
-                                _config_: config
-                            }
-                        )
-
-                } else {
-
+                if ( error ) {
                     console.error( error )
                     next()
-
+                    return
                 }
+
+                if ( !stats.isFile() ) {
+                    console.error( `${pathToFile} is not a file, abort render !` )
+                    next()
+                    return
+                }
+
+                response.render(
+                    pathToFile,
+                    {
+                        _app_:           app,
+                        _standAloneApp_: standAlone,
+                        _config_:        config
+                    }
+                )
 
             } )
     } )
