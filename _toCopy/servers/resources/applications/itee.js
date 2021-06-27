@@ -244,34 +244,172 @@ const AppPage = {
         _initDatas ( parameters ) {
             'use strict'
 
-            ///////////////////////////////////
+            const self          = this
+            const textureLoader = new Itee.TextureLoader()
+
+            /////////////////////////////////// Stars
 
             //This will add a starfield to the background of a scene
-            const starsGeometry = new Itee.Geometry();
 
-            for ( let i = 0 ; i < 100000 ; i++ ) {
+            //////////////// Earth
 
-                let star = new Itee.Vector3();
-                star.x   = Itee._Math.randFloatSpread( 1000 );
-                star.y   = Itee._Math.randFloatSpread( 1000 );
-                star.z   = Itee._Math.randFloatSpread( 1000 );
+            ///////// Text
 
-                starsGeometry.vertices.push( star );
+            initStars()
+            initEarth()
+            initText()
+
+            /////////
+
+            function getRandomArbitrary ( min, max ) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function initStars () {
+
+                const minDistance = 10
+                const maxDistance = 50
+
+                //                fromPoints( 3000, "/resources/images/stars/star_ghost.png", 0.5 )
+                fromPoints( 1000000, "/resources/images/stars/supernovae.png", 3 )
+                //                                fromSprit()
+
+                function fromPoints ( numberOfStars, texturePath, size ) {
+
+                    const starsPositions = []
+                    const starsColors    = []
+                    const center         = new Itee.Vector3()
+                    for ( let i = 0 ; i < numberOfStars ; i++ ) {
+
+                        let vec3 = new Itee.Vector3( getRandomArbitrary( -maxDistance, maxDistance ), getRandomArbitrary( -maxDistance, maxDistance ), getRandomArbitrary( -maxDistance, maxDistance ) )
+                        while ( vec3.distanceTo( center ) < minDistance ) {
+                            vec3 = new Itee.Vector3( getRandomArbitrary( -maxDistance, maxDistance ), getRandomArbitrary( -maxDistance, maxDistance ), getRandomArbitrary( -maxDistance, maxDistance ) )
+                        }
+
+                        starsPositions.push( vec3.x, vec3.y, vec3.z )
+                        //                starsColors.push( 0.8,0.8,0.8 )
+                        starsColors.push( Math.random(), Math.random(), Math.random() )
+
+                    }
+
+                    const starsGeometry = new Itee.BufferGeometry()
+                    starsGeometry.addAttribute( 'position', new Itee.Float32BufferAttribute( starsPositions, 3 ) )
+                    starsGeometry.addAttribute( 'color', new Itee.Float32BufferAttribute( starsColors, 3 ) )
+
+                    const starsMaterial = new Itee.PointsMaterial( {
+                        size:        size,
+                        map:         textureLoader.load( texturePath ),
+                        transparent: true,
+                        alphaTest: 0.07,
+                        vertexColors: Itee.VertexColors,
+
+                        depthWrite: false,
+                        //                        depthTest: false
+
+                    } )
+
+                    const starField = new Itee.Points( starsGeometry, starsMaterial )
+
+                    self.scene.add( starField )
+
+                }
+
+                function fromSprit () {
+
+                    var starMaterial2       = new Itee.SpriteMaterial( {
+                        //                        map: textureLoader.load( "/resources/images/stars/supernovae_3.png" ),
+                        map: new Itee.CanvasTexture( generateSprite() ),
+                        blending: Itee.AdditiveBlending,
+                        depthWrite: false,
+                        depthTest: false
+                    } )
+
+                    for ( var i = 0 ; i < 1000 ; i++ ) {
+                        const particle = new Itee.Sprite( starMaterial2 )
+                        particle.position.set( getRandomArbitrary( -maxDistance, maxDistance ), getRandomArbitrary( -maxDistance, maxDistance ), getRandomArbitrary( -maxDistance, maxDistance ) )
+
+                        self.scene.add( particle )
+                    }
+
+                    function generateSprite () {
+                        var canvas    = document.createElement( 'canvas' );
+                        canvas.width  = 256
+                        canvas.height = 256
+                        var context   = canvas.getContext( '2d' );
+                        var gradient  = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+                        gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
+                        gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
+                        gradient.addColorStop( 0.4, 'rgba(0,0,64,1)' );
+                        gradient.addColorStop( 1, 'rgba(0,0,0,1)' );
+                        context.fillStyle = gradient;
+                        context.fillRect( 0, 0, canvas.width, canvas.height );
+                        return canvas;
+                    }
+
+                }
 
             }
 
-            const tex           = new Itee.TextureLoader().load( "https://threejs.org/examples/textures/sprites/disc.png" );
-            const starsMaterial = new Itee.PointsMaterial( {
-                color:           0x888888,
-                size:            2.0,
-                map:             tex,
-                //                sizeAttenuation: false
-            } );
-            const starField     = new Itee.Points( starsGeometry, starsMaterial );
+            function initEarth () {
 
-            this.scene.add( starField );
+                const geometryEarth      = new Itee.SphereGeometry( 1, 100, 100 )
+                const textureMap         = textureLoader.load( '/resources/images/planets/earth/earthmap1k.jpg' )
+                const textureBumpMap     = textureLoader.load( '/resources/images/planets/earth/earthbump1k.jpg' )
+                const textureSpecularMap = textureLoader.load( '/resources/images/planets/earth/earthspec1k.jpg' )
 
-            ////////////////
+                const materialEarth = new Itee.MeshPhongMaterial( {
+                    map:         textureMap,
+                    bumpMap:     textureBumpMap,
+                    bumpScale:   0.01,
+                    specularMap: textureSpecularMap,
+                    specular:    new Itee.Color( 'grey' ),
+
+                    //                    depthWrite: false,
+                    //                    depthTest: false
+                } )
+
+                //                new THREE.MeshBasicMaterial( { side:THREE.BackSide,map:texture, depthWrite: false, depthTest: false })
+
+                const earthMesh = new Itee.Mesh( geometryEarth, materialEarth )
+                self.scene.add( earthMesh )
+
+            }
+
+            function initText () {
+
+                const loader = new Itee.FontLoader()
+                loader.load( '/resources/fonts/droid_serif_bold.typeface.json', font => {
+
+                    const textGeometry = new Itee.TextGeometry( "Hello", {
+                        font:          font,
+                        size:          1,
+                        height:        1,
+                        curveSegments: 2
+                    } )
+                    textGeometry.computeBoundingBox()
+                    textGeometry.computeVertexNormals()
+
+                    const xOffset = -0.5 * ( textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x )
+                    const zOffset = -0.5 * ( textGeometry.boundingBox.max.z - textGeometry.boundingBox.min.z )
+
+                    const textMaterial = [
+                        new Itee.MeshPhongMaterial( {
+                            color:       0x00B90E,
+                            flatShading: true
+                        } ), // front
+                        new Itee.MeshPhongMaterial( { color: 0x03EF15 } ) // side
+                    ]
+
+                    const textMesh      = new Itee.Mesh( textGeometry, textMaterial )
+                    textMesh.position.x = xOffset
+                    textMesh.position.y = 1.2
+                    textMesh.position.z = zOffset
+
+                    self.scene.add( textMesh )
+
+                } )
+
+            }
 
         },
 
